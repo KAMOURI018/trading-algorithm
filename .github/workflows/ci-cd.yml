@@ -28,7 +28,7 @@ jobs:
       # Step 4: Build and push Docker images
       - name: Build and push Docker images
         env:
-          DOCKER_IMAGE_PREFIX: heraclite  # Docker Hub username
+          DOCKER_IMAGE_PREFIX: khalilamouri  # Updated Docker Hub username
         run: |
           docker build -t $DOCKER_IMAGE_PREFIX/data-ingestion:latest -f data-ingestion/Dockerfile data-ingestion/
           docker push $DOCKER_IMAGE_PREFIX/data-ingestion:latest
