@@ -1,9 +1,9 @@
-from ib_insync import IB, Stock, Option
-import redis
-
+from ib_async import *
+from ib_insync import IB, Stock, util, Option
+util.startLoop()
 ib = IB()
-ib.connect('127.0.0.1', 7497, clientId=1)
-r = redis.Redis(host='redis', port=6379, db=0)
+ib.connect('127.0.0.1', 7497, 1)
+
 
 tlt = Stock('TLT', 'SMART', 'USD')
 tltw = Stock('TLTW', 'SMART', 'USD')
