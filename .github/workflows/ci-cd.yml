@@ -10,14 +10,21 @@ jobs:
     runs-on: self-hosted  # Ensures the job runs on your self-hosted runner
 
     steps:
-      - name: Check out the code
-        uses: actions/checkout@v2
-
-      - name: Build and push Docker images
-        shell: bash  # Switch to Bash instead of PowerShell
+      # Step 1: Install PowerShell Core
+      - name: Install PowerShell Core
         run: |
-          docker build -t $DOCKER_IMAGE_PREFIX/data-ingestion:latest -f data-ingestion/Dockerfile data-ingestion/
-          docker push $DOCKER_IMAGE_PREFIX/data-ingestion:latest
+          sudo apt-get update
+          sudo apt-get install -y wget apt-transport-https software-properties-common
+          wget -q "https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb"
+          sudo dpkg -i packages-microsoft-prod.deb
+          sudo apt-get update
+          sudo apt-get install -y powershell
+
+      # Step 2: Set PowerShell Execution Policy (now `pwsh` is available)
+      - name: Set PowerShell Execution Policy
+        shell: pwsh
+        run: |
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
       
       # Step 1: Check out the code
       - name: Checkout code
