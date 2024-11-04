@@ -37,16 +37,17 @@ jobs:
           docker build -t khalilamouri/visualization:latest -f visualization/Dockerfile visualization/
           docker push khalilamouri/visualization:latest
 
-      # Optional Step 4: Set up kubeconfig if deploying to Kubernetes
+      # Step 4: Set up kubeconfig at C:\Users\amour\.kube\config
       - name: Set up kubeconfig
+        shell: cmd
         run: |
-          mkdir -p ~/.kube
-          echo "${{ secrets.KUBECONFIG_B64 }}" | base64 -d > ~/.kube/config
-        shell: bash
+          mkdir C:\Users\amour\.kube
+          powershell -Command "[System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String('${{ secrets.KUBECONFIG_B64 }}')) | Out-File -FilePath C:\Users\amour\.kube\config -Encoding UTF8"
 
-      # Optional Step 5: Deploy to Kubernetes
+      # Step 5: Deploy to Kubernetes
       - name: Deploy to Kubernetes
+        shell: cmd
         env:
-          KUBECONFIG: ~/.kube/config
+          KUBECONFIG: C:\Users\amour\.kube\config
         run: |
           kubectl apply -f k8s-deployment.yaml
