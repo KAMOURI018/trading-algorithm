@@ -2,7 +2,7 @@ import redis
 import time
 
 r = redis.Redis(host='redis', port=6379, db=0)
-MAX_POSITION = 100
+MAX_POSITION = 1
 STOP_LOSS_THRESHOLD = 0.05
 initial_price = {
     "TLT": float(r.hget("prices", "TLT")),
