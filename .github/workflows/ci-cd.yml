@@ -12,9 +12,10 @@ jobs:
     steps:
       # Step 1: Temporarily set PowerShell execution policy
       - name: Set PowerShell Execution Policy
-        shell: powershell
+        shell: cmd
         run: |
-          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+          powershell.exe -Command "Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force"
+
 
       
 
