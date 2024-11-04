@@ -44,14 +44,20 @@ jobs:
 
       # Step 5: Decode and Save Kubeconfig
       - name: Set up kubeconfig
+        env:
+          KUBECONFIG_B64: ${{ secrets.KUBECONFIG_B64 }}
         run: |
           # Create .kube directory if it doesn't exist
           mkdir -p ~/.kube
           # Decode the base64 encoded kubeconfig and save it to ~/.kube/config
-          echo "${{ secrets.KUBECONFIG_B64 }}" | base64 -d > ~/.kube/config
+          echo "${KUBECONFIG_B64}" | base64 -d > ~/.kube/config
+          # Set the KUBECONFIG environment variable to the decoded config file
+          export KUBECONFIG=~/.kube/config
         shell: bash
 
       # Step 6: Deploy to Kubernetes
       - name: Deploy to Kubernetes
+        env:
+          KUBECONFIG: ~/.kube/config
         run: |
           kubectl apply -f k8s-deployment.yaml
