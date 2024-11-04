@@ -14,22 +14,22 @@ spec:
     spec:
       containers:
         - name: data-ingestion
-          image: yourdockerhubusername/data-ingestion:latest
+          image: khalilamouri/data-ingestion:latest
           ports:
             - containerPort: 5000
 
         - name: strategy
-          image: yourdockerhubusername/strategy:latest
+          image: khalilamouri/strategy:latest
           ports:
             - containerPort: 5001
 
         - name: risk-management
-          image: yourdockerhubusername/risk-management:latest
+          image: khalilamouri/risk-management:latest
           ports:
             - containerPort: 5002
 
         - name: visualization
-          image: yourdockerhubusername/visualization:latest
+          image: khalilamouri/visualization:latest
           ports:
             - containerPort: 8000
 
