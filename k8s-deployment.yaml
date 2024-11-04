@@ -1,0 +1,102 @@
+        - name: strategy
+          image: yourdockerhubusername/strategy:latest
+          ports:
+            - containerPort: 5001
+
+        - name: risk-management
+          image: yourdockerhubusername/risk-management:latest
+          ports:
+            - containerPort: 5002
+
+        - name: visualization
+          image: yourdockerhubusername/visualization:latest
+          ports:
+            - containerPort: 8000
+
+        - name: redis
+          image: redis
+          ports:
+            - containerPort: 6379
+
+        - name: monitoring
+          image: grafana/grafana
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-ingestion-service
+spec:
+  selector:
+    app: trading-algorithm
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: strategy-service
+spec:
+  selector:
+    app: trading-algorithm
+  ports:
+    - protocol: TCP
+      port: 5001
+      targetPort: 5001
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: risk-management-service
+spec:
+  selector:
+    app: trading-algorithm
+  ports:
+    - protocol: TCP
+      port: 5002
+      targetPort: 5002
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: visualization-service
+spec:
+  selector:
+    app: trading-algorithm
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+spec:
+  selector:
+    app: trading-algorithm
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  selector:
+    app: trading-algorithm
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer
