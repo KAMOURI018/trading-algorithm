@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted  # This ensures the job runs on your self-hosted runner
 
     steps:
       # Step 1: Check out the code
@@ -49,6 +49,9 @@ jobs:
           mkdir -p ~/.kube
           # Decode the base64 encoded kubeconfig and save it to ~/.kube/config
           echo "${{ secrets.KUBECONFIG_B64 }}" | base64 -d > ~/.kube/config
+          # Verify the kubeconfig content (for debugging purposes)
+          echo "Kubeconfig content:"
+          cat ~/.kube/config
         shell: bash
 
       # Step 6: Deploy to Kubernetes
@@ -56,4 +59,6 @@ jobs:
         env:
           KUBECONFIG: ~/.kube/config  # Set KUBECONFIG environment variable
         run: |
+          kubectl config view  # View the kubectl config to ensure it's loaded
+          kubectl cluster-info  # Verify connection to the Kubernetes cluster
           kubectl apply -f k8s-deployment.yaml
