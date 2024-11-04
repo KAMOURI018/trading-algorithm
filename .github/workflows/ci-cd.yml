@@ -10,6 +10,14 @@ jobs:
     runs-on: self-hosted  # Or windows-latest if you're using a Windows runner
 
     steps:
+      # Step 1: Temporarily set PowerShell execution policy
+      - name: Set PowerShell Execution Policy
+        shell: powershell
+        run: |
+          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
+      
+
       # Step 1: Check out the code
       - name: Checkout code
         uses: actions/checkout@v2
