@@ -1,3 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trading-algorithm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: trading-algorithm
+  template:
+    metadata:
+      labels:
+        app: trading-algorithm
+    spec:
+      containers:
+        - name: data-ingestion
+          image: yourdockerhubusername/data-ingestion:latest
+          ports:
+            - containerPort: 5000
+
         - name: strategy
           image: yourdockerhubusername/strategy:latest
           ports:
@@ -23,6 +43,7 @@
           ports:
             - containerPort: 3000
 ---
+# Define services for each container
 apiVersion: v1
 kind: Service
 metadata:
@@ -52,19 +73,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: risk-management-service
-spec:
-  selector:
-    app: trading-algorithm
-  ports:
-    - protocol: TCP
-      port: 5002
-      targetPort: 5002
-  type: ClusterIP
----
-apiVersion: v1
-kind: Service
-metadata:
   name: visualization-service
 spec:
   selector:
@@ -74,19 +82,6 @@ spec:
       port: 8000
       targetPort: 8000
   type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: redis-service
-spec:
-  selector:
-    app: trading-algorithm
-  ports:
-    - protocol: TCP
-      port: 6379
-      targetPort: 6379
-  type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
