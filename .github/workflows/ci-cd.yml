@@ -23,7 +23,7 @@ jobs:
 
       # Step 3: Build and push Docker images without using DOCKER_IMAGE_PREFIX
       - name: Build and push Docker images
-        shell: bash  # Use `powershell` if on a Windows runner
+        shell: powershell  # Use `powershell` if on a Windows runner
         run: |
           # Replace `your_dockerhub_username` with your actual Docker Hub username
           docker build -t khalilamouri/data-ingestion:latest -f data-ingestion/Dockerfile data-ingestion/
