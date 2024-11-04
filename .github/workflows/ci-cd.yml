@@ -10,8 +10,9 @@ jobs:
     runs-on: self-hosted  # Ensures the job runs on your self-hosted runner
 
     steps:
+      # Temporarily bypass the PowerShell execution policy
       - name: Set PowerShell Execution Policy
-        shell: pwsh
+        shell: powershell  # Use the Windows PowerShell shell
         run: |
           Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
       
