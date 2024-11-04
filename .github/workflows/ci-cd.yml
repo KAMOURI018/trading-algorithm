@@ -24,18 +24,18 @@ jobs:
       - name: Build and push Docker images
         shell: cmd
         run: |
-          # Replace `your_dockerhub_username` with your actual Docker Hub username
-          docker build -t your_dockerhub_username/data-ingestion:latest -f data-ingestion/Dockerfile data-ingestion/
-          docker push your_dockerhub_username/data-ingestion:latest
+          # Replace `khalilamouri` with your actual Docker Hub username
+          docker build -t khalilamouri/data-ingestion:latest -f data-ingestion/Dockerfile data-ingestion/
+          docker push khalilamouri/data-ingestion:latest
           
-          docker build -t your_dockerhub_username/strategy:latest -f strategy/Dockerfile strategy/
-          docker push your_dockerhub_username/strategy:latest
+          docker build -t khalilamouri/strategy:latest -f strategy/Dockerfile strategy/
+          docker push khalilamouri/strategy:latest
           
-          docker build -t your_dockerhub_username/risk-management:latest -f risk-management/Dockerfile risk-management/
-          docker push your_dockerhub_username/risk-management:latest
+          docker build -t khalilamouri/risk-management:latest -f risk-management/Dockerfile risk-management/
+          docker push khalilamouri/risk-management:latest
           
-          docker build -t your_dockerhub_username/visualization:latest -f visualization/Dockerfile visualization/
-          docker push your_dockerhub_username/visualization:latest
+          docker build -t khalilamouri/visualization:latest -f visualization/Dockerfile visualization/
+          docker push khalilamouri/visualization:latest
 
       # Optional Step 4: Set up kubeconfig if deploying to Kubernetes
       - name: Set up kubeconfig
