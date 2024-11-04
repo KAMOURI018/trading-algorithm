@@ -10,11 +10,14 @@ jobs:
     runs-on: self-hosted  # Ensures the job runs on your self-hosted runner
 
     steps:
-      # Temporarily bypass the PowerShell execution policy
-      - name: Set PowerShell Execution Policy
-        shell: powershell  # Use the Windows PowerShell shell
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker images
+        shell: bash  # Switch to Bash instead of PowerShell
         run: |
-          Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+          docker build -t $DOCKER_IMAGE_PREFIX/data-ingestion:latest -f data-ingestion/Dockerfile data-ingestion/
+          docker push $DOCKER_IMAGE_PREFIX/data-ingestion:latest
       
       # Step 1: Check out the code
       - name: Checkout code
