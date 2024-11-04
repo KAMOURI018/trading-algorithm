@@ -1,0 +1,6 @@
+ib_insync
+redis
+fastapi
+uvicorn
+numpy
+matplotlib
